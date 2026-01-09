@@ -263,3 +263,19 @@ Sugestão:
 - Responsável técnico: (definir)
 - Reunião semanal de arquitetura: (definir)
 - SLA/SLO inicial do MVP: (definir)
+
+Instruções adicionais (recomendação prática para “profissional e robusto”)
+
+Para aumentar a chance de sucesso com pouca fricção, recomendo impor 3 padrões desde o primeiro commit:
+
+Contrato de dados: toda saída de IA deve ser JSON validado por schema e auditada em ai_runs.
+
+Revisão humana: tudo que vira “verdade” (taxonomia/morfotipo) precisa de status approved/corrected.
+
+Padronização de stack: um único “AI Gateway” (FastAPI) e um único padrão de indexação (LlamaIndex ou LangChain, escolha um e fixe).
+
+Se você quiser, eu também posso te entregar na sequência:
+
+um backlog de épicos e tarefas (MVP → V2) em formato pronto para GitHub Projects/Jira,
+
+e um esqueleto de repositório (estrutura de pastas + padrões de endpoints + modelos de tabela “core”).
