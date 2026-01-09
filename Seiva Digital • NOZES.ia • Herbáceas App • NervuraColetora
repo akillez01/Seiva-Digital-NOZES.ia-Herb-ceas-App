@@ -1,0 +1,252 @@
+# Plataforma Unificada de Dados & IA Socioambiental  
+**Seiva Digital • NOZES.ia • Herbáceas App • NervuraColetora**  
+
+Versão: 0.2 (MVP Blueprint Consolidado)  
+Última atualização: Janeiro/2026  
+
+---
+
+## 1) Visão Geral
+
+Esta plataforma unifica **coleta de dados de campo**, **análise botânica**, **identificação biológica**, **processamento de imagens** e **Inteligência Artificial (LLM + VLM)** em um **ecossistema único, robusto e profissional**, voltado para projetos socioambientais, inventários florestais e análises ecológicas.
+
+### Projetos Integrados
+- **Seiva Digital** — Coleta socioambiental offline-first (Flutter)
+- **NOZES.ia** — Chaves de identificação biológica inteligentes (React/TS)
+- **Herbáceas App** — Análise de vegetação herbácea por imagem (Web + IA)
+- **NervuraColetora** — Inventário botânico com múltiplos fustes (Web/Mobile híbrido)
+
+O objetivo central é **compartilhar um backbone único de dados e IA**, reduzindo retrabalho, aumentando consistência científica e permitindo evolução contínua via aprendizado de máquina.
+
+---
+
+## 2) Princípios de Arquitetura
+
+### 2.1 Banco Único ≠ Banco Simples
+O “banco único” é uma **Plataforma de Dados em Camadas**:
+
+1. **Object Storage**  
+   - Imagens, fotos de campo, estampas, exports, versões
+2. **PostgreSQL**  
+   - Dados transacionais e científicos
+3. **PostGIS**  
+   - Coordenadas, parcelas, mapas, KML
+4. **pgvector**  
+   - Embeddings (texto + imagem) para busca semântica e RAG
+5. **Pipelines Assíncronos**  
+   - Processamento de imagens, IA, validações
+6. **AI Gateway (FastAPI)**  
+   - API única para todos os projetos
+
+---
+
+## 3) Projetos Integrados à Plataforma
+
+---
+
+## 🌳 Seiva Digital
+**Coleta socioambiental offline-first**
+
+- Flutter (Android)
+- SQLite local → sincronização automática
+- GPS, formulários customizáveis, fotos com metadados
+- Inventários florestais (AAS)
+- Integração com IA para:
+  - validação de consistência
+  - enriquecimento de dados
+  - análise posterior por imagem
+
+---
+
+## 🌿 NOZES.ia
+**Identificação biológica inteligente**
+
+- React 19 + TypeScript
+- Geração automática de:
+  - espécies
+  - características
+  - estados
+  - matrizes taxonômicas
+- IA multimodal para:
+  - sugestão taxonômica
+  - normalização de termos
+  - busca semântica entre chaves
+- Persistência estruturada no banco único
+
+---
+
+## 🌱 Herbáceas App
+**Análise de vegetação herbácea com IA**
+
+- Upload em lote de imagens
+- Análise por subparcelas
+- Extração estruturada:
+  - morfotipos
+  - taxonomia sugerida
+  - características morfológicas
+- Múltiplos modelos (Gemini, OpenAI, Claude)
+- Revisão humana obrigatória
+- Exportação Excel/CSV
+- Primeiro pipeline “fim-a-fim” do MVP
+
+---
+
+## 🌳 NervuraColetora
+**Inventário Botânico com Múltiplos Fustes**
+
+Aplicativo híbrido (Web + Android + iOS) focado em **coleta botânica avançada**, com suporte completo a **múltiplos fustes por indivíduo**.
+
+### Funcionalidades Principais
+#### 🌳 Inventário Avançado
+- Múltiplos fustes individuais por árvore
+- Modal visual de gerenciamento
+- Distribuição proporcional automática de alturas
+- Compatibilidade híbrida:
+  - texto: `15+18+22`
+  - modal visual
+- Preview sonoro com valores calculados
+
+#### 📷 Registro Rápido com Estampa
+- Câmera integrada
+- Estampa automática nas fotos:
+  - ID sequencial (NC001…)
+  - coordenadas
+  - município/UF
+  - espécie
+  - data/hora
+- Registro instantâneo no inventário
+
+#### 📍 GPS Inteligente
+- Captura automática ao focar nova linha
+- Geocodificação reversa (município/UF)
+- Mapa interativo (Leaflet + OSM)
+- 100% offline-first
+
+#### 💾 Exportação Científica
+- Excel/CSV expandido (1 fuste = 1 linha)
+- Exportação KML
+- Backup/restauração completa
+- Compartilhamento nativo
+
+### Tecnologias
+- Frontend: React + TypeScript + Vite
+- Mobile: Capacitor (Android + iOS)
+- Mapas: Leaflet + OpenStreetMap
+- Dados locais: IndexedDB + localStorage
+- CI/CD: GitHub Actions
+
+### Integração com a Plataforma
+- Sync com Postgres central
+- Upload de fotos para Object Storage
+- Processamento de imagem por IA (futuro):
+  - identificação de espécie
+  - validação de CAP/altura
+  - detecção de inconsistências
+
+---
+
+## 4) Arquitetura Técnica (Comum a Todos)
+
+### 4.1 Stack Oficial
+- **Banco**: PostgreSQL + PostGIS + pgvector
+- **Storage**: S3 ou MinIO
+- **API**: FastAPI (AI Gateway)
+- **Jobs**: Redis + Celery (ou RQ)
+- **IA/RAG**: LlamaIndex (padrão)
+- **Observabilidade**: Prometheus + Grafana
+
+---
+
+## 5) Governança de IA (Obrigatório)
+
+Toda execução de IA gera um registro em `core.ai_runs` contendo:
+- modelo / provedor
+- versão do prompt
+- hashes de entrada e saída
+- latência e custo estimado
+- status
+- revisão humana (pending / approved / corrected)
+- nível de confiança
+
+Nenhum dado científico é considerado **final** sem **validação humana**.
+
+---
+
+## 6) MVP – Entregas Prioritárias
+
+### MVP 1 – Backbone
+- Postgres + PostGIS + pgvector
+- Object Storage
+- Schemas:
+  - `core`
+  - `seiva`
+  - `nozes`
+  - `herbaceas`
+  - `nervura`
+
+### MVP 2 – Pipeline de Imagem (Herbáceas)
+- imagem → IA → JSON validado → banco → revisão
+
+### MVP 3 – Sync NervuraColetora
+- múltiplos fustes
+- fotos estampadas
+- export científico
+
+---
+
+## 7) Roadmap Evolutivo
+
+### Curto Prazo (0–3 meses)
+- MVP completo
+- RAG NOZES
+- Pipeline Herbáceas
+- Sync NervuraColetora
+
+### Médio Prazo (3–6 meses)
+- ML para identificação automática de espécies
+- Padronização de morfotipos interprojetos
+- Painel de qualidade científica
+
+### Longo Prazo (6–12 meses)
+- Modelos treinados com dados próprios
+- Segmentação vegetal
+- Integração com herbários virtuais
+- Lakehouse / Big Data Analytics
+
+---
+
+## 8) Critérios de Qualidade
+- Offline-first real
+- Auditoria total
+- Versionamento de dados e IA
+- Contratos JSON rígidos
+- Reprocessamento seguro
+- Escalabilidade horizontal
+
+---
+
+## 9) Como Começar
+1. Aprovar este README como baseline
+2. Criar repositório “plataforma”
+3. Subir ambiente DEV (Docker)
+4. Implementar tabelas `core`
+5. Pipeline Herbáceas
+6. Sync NervuraColetora
+7. RAG NOZES
+8. Integração Seiva
+
+---
+
+## 10) Visão Final
+Esta plataforma não é apenas um conjunto de apps.  
+Ela é um **ecossistema científico digital**, capaz de:
+
+- preservar dados de campo
+- aumentar rigor científico
+- reduzir erros humanos
+- escalar análise ambiental
+- evoluir continuamente com IA
+
+---
+
+**Tecnologia a serviço da floresta, da ciência e da verdade dos dados.**
